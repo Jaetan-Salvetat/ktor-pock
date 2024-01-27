@@ -9,6 +9,7 @@ class UserService {
     private val repository = UserRepository()
 
     fun create(username: String, password: String): UserExceptions {
+        if (repository.getByUsername(username) != null) return UserExceptions.UserAlreadyExist
         if (!username.isValidUsername()) return UserExceptions.InvalidUsername
         if (!password.isValidPassword()) return UserExceptions.InvalidPassword
 
@@ -19,10 +20,11 @@ class UserService {
     }
 }
 
-sealed class UserExceptions(open val message: String) {
+sealed class UserExceptions(open val message: String = "") {
     data object InvalidUsername: UserExceptions("invalid_username")
     data object InvalidPassword: UserExceptions("invalid_password")
+    data object UserAlreadyExist: UserExceptions("user_already_exist")
     data object Unknown: UserExceptions("unknown")
 
-    data class Success(val user: User) : UserExceptions("")
+    data class Success(val user: User) : UserExceptions()
 }

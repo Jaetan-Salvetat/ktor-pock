@@ -15,6 +15,6 @@ fun Password.isValidPassword(): Boolean = this.length >= 4
 fun Password.hash(): String = BCrypt.withDefaults()
     .hashToString(SALT, this.toCharArray())
 
-fun Password.verify(basicPassword: String): Boolean = BCrypt.verifyer()
-    .verify(basicPassword.toCharArray(), this.toCharArray())
+fun Password.verify(basicPassword: Password): Boolean = BCrypt.verifyer()
+    .verify(this.toCharArray(), basicPassword.toCharArray())
     .verified

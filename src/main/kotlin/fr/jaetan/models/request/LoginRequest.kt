@@ -4,7 +4,7 @@ import fr.jaetan.extensions.Password
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RegisterRequest(
+data class LoginRequest(
     val username: String,
     val password: Password
 )

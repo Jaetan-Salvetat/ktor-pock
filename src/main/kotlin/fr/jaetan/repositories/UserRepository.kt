@@ -1,5 +1,6 @@
 package fr.jaetan.repositories
 
+import fr.jaetan.extensions.hash
 import fr.jaetan.models.Role
 import fr.jaetan.models.User
 import fr.jaetan.models.database.Users
@@ -11,7 +12,7 @@ class UserRepository {
         return transaction {
             val query = Users.insert {
                 it[Users.username] = username
-                it[Users.password] = password
+                it[Users.password] = password.hash()
                 it[roleId] = Role.User.id
             }
 

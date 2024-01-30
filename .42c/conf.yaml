@@ -1,0 +1,3 @@
+apis:
+  src/main/resources/openapi/documentation.yaml:
+    alias: "application-api"

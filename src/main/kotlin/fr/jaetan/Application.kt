@@ -12,9 +12,10 @@ fun main() {
 }
 
 fun Application.module() {
-    configureHTTP()
     configureMonitoring()
     configureSerialization()
-    configureRouting()
+    configureValidation()
+    configureHTTP()
     configureMySql()
+    configureRouting()
 }

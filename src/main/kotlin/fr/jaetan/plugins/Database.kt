@@ -25,7 +25,7 @@ private fun createTables() {
     transaction {
         exec("CREATE TABLE IF NOT EXISTS Roles (id INTEGER PRIMARY KEY, name VARCHAR(25) UNICODE)")
         exec("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTO_INCREMENT, username VARCHAR(25) UNIQUE, password VARCHAR(255), roleId integer, FOREIGN KEY (roleId) REFERENCES Roles(id))")
-        exec("CREATE TABLE IF NOT EXISTS Tasks (id INTEGER PRIMARY KEY AUTO_INCREMENT, text TEXT, userId INTEGER, FOREIGN KEY (userId) REFERENCES users(id))")
+        exec("CREATE TABLE IF NOT EXISTS Tasks (id INTEGER PRIMARY KEY AUTO_INCREMENT, text TEXT, idDone BOOLEAN, userId INTEGER, FOREIGN KEY (userId) REFERENCES users(id))")
 
     }
 }

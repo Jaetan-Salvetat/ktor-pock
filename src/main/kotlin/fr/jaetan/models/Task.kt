@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Task(
-    val id: String,
-    val text: String
+    val id: Int,
+    val text: String,
+    val isDone: Boolean
 )

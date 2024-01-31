@@ -1,7 +1,5 @@
 package fr.jaetan.services
 
-import fr.jaetan.extensions.isValidPassword
-import fr.jaetan.extensions.isValidUsername
 import fr.jaetan.models.User
 import fr.jaetan.repositories.UserRepository
 
@@ -10,8 +8,6 @@ class UserService {
 
     fun create(username: String, password: String): UserExceptions {
         if (repository.getByUsername(username) != null) return UserExceptions.UserAlreadyExist
-        if (!username.isValidUsername()) return UserExceptions.InvalidUsername
-        if (!password.isValidPassword()) return UserExceptions.InvalidPassword
 
         val user = repository.create(username, password)
             ?: return UserExceptions.Unknown
@@ -21,8 +17,6 @@ class UserService {
 }
 
 sealed class UserExceptions(open val message: String = "") {
-    data object InvalidUsername: UserExceptions("invalid_username")
-    data object InvalidPassword: UserExceptions("invalid_password")
     data object UserAlreadyExist: UserExceptions("user_already_exist")
     data object Unknown: UserExceptions("unknown")
 

@@ -1,5 +1,7 @@
 package fr.jaetan.routes
 
+import fr.jaetan.extensions.respond
+import fr.jaetan.helpers.JwtHelper
 import fr.jaetan.models.request.LoginRequest
 import fr.jaetan.models.responses.ErrorResponse
 import fr.jaetan.models.responses.FullUserResponse
@@ -15,12 +17,17 @@ fun Application.authRouting() {
     val service = AuthService()
 
     routing {
-        route("api/auth") {
+        route("auth") {
             post("login") {
                 val credentials = call.receive<LoginRequest>()
+                val jwt = JwtHelper()
 
                 when (val result = service.login(credentials.username, credentials.password)) {
-                    is AuthExceptions.Success -> call.respond(HttpStatusCode.OK, FullUserResponse(result.user))
+                    is AuthExceptions.Success -> call.respond(
+                        status = HttpStatusCode.OK,
+                        message = FullUserResponse(result.user),
+                        headers = mapOf(HttpHeaders.Authorization to jwt.generate(result.user))
+                    )
                     else -> call.respond(HttpStatusCode.Unauthorized, ErrorResponse(result.message))
                 }
             }

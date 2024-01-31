@@ -1,5 +1,7 @@
 package fr.jaetan.routes
 
+import fr.jaetan.extensions.respond
+import fr.jaetan.helpers.JwtHelper
 import fr.jaetan.models.request.RegisterRequest
 import fr.jaetan.models.responses.ErrorResponse
 import fr.jaetan.models.responses.FullUserResponse
@@ -15,18 +17,22 @@ fun Application.userRouting() {
     val service = UserService()
 
     routing {
-        route("api/users") {
+        route("users") {
             post("create") {
                 val user = call.receive<RegisterRequest>()
+                val jwt = JwtHelper()
 
                 when (val result = service.create(user.username, user.password)) {
-                    is UserExceptions.Success -> call.respond(
-                        HttpStatusCode.Created,
-                        FullUserResponse(result.user)
-                    )
+                    is UserExceptions.Success -> {
+                        call.respond(
+                            status = HttpStatusCode.Created,
+                            message = FullUserResponse(result.user),
+                            headers = mapOf(HttpHeaders.Authorization to jwt.generate(result.user))
+                        )
+                    }
                     else -> call.respond(
-                        HttpStatusCode.BadRequest,
-                        ErrorResponse(result.message)
+                        status = HttpStatusCode.BadRequest,
+                        message = ErrorResponse(result.message)
                     )
                 }
             }

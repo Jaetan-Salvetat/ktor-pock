@@ -10,11 +10,8 @@ fun Application.configureHTTP() {
     install(CORS) {
         allowMethod(HttpMethod.Get)
         allowMethod(HttpMethod.Post)
-        allowMethod(HttpMethod.Put)
-        allowMethod(HttpMethod.Delete)
-        allowMethod(HttpMethod.Patch)
         allowHeader(HttpHeaders.Authorization)
-        anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
+        anyHost()
     }
     routing {
         swaggerUI(path = "openapi")

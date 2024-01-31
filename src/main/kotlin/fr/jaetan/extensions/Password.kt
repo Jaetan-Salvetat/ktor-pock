@@ -8,7 +8,7 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
 typealias Password = String
-private const val SECRET = "my best random secret"
+private const val SECRET = "my best random secret" // TODO: use env
 private const val SALT = 12
 fun Password.isValidPassword(): Boolean = this.length >= 4
 

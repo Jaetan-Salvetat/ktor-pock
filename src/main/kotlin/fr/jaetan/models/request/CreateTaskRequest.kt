@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CreateTaskRequest(
-    val text: String
+    val text: String,
+    val isDone: Boolean
 )

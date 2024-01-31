@@ -12,19 +12,3 @@ paths:
       responses:
         "201":
           description: "User created"
-          $ref: "#/components/schemas/FullUser"
-          content:
-            application/json:
-              schema:
-                type: FullUser
-
-components:
-  schemas:
-    FullUser:
-      description: "All user details"
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
